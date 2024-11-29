@@ -34,6 +34,18 @@ class MyForm(QDialog):
 
     def death(self):
         age_death = 0
+        age_death = (1/130*self.ui.wiekBar.value())*100
+        chol_death = 0
+        chol_death = 1/100*(self.ui.cholBar.value()-200)*100
+        hearth_death = 0
+        if chol_death < 0:
+            chol_death = 0
+        if self.ui.tentoBox.value() < 50:
+            hearth_death = 1/50*(50-self.ui.tentoBox.value())*100
+        elif self.ui.cholBox.value() > 100:
+            hearth_death = 1/50*(200-self.ui.tentoBox.value()-100)*100
+
+        death = (age_death + chol_death + hearth_death)/3
 
 
 
