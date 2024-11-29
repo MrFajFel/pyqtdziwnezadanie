@@ -14,6 +14,7 @@ class MyForm(QDialog):
         self.ui.tentnoBar.valueChanged.connect(self.bar_changed)
         self.ui.cholBar.valueChanged.connect(self.bar_changed)
 
+
         self.ui.cholBox.valueChanged.connect(self.box_changed)
         self.ui.wiekBox.valueChanged.connect(self.box_changed)
         self.ui.tentoBox.valueChanged.connect(self.box_changed)
@@ -25,12 +26,14 @@ class MyForm(QDialog):
         self.ui.cholBar.setValue(self.ui.cholBox.value())
         self.ui.wiekBar.setValue(self.ui.wiekBox.value())
         self.ui.tentnoBar.setValue(self.ui.tentoBox.value())
+        self.death()
 
 
     def bar_changed(self):
         self.ui.tentoBox.setValue(self.ui.tentnoBar.value())
         self.ui.cholBox.setValue(self.ui.cholBar.value())
         self.ui.wiekBox.setValue(self.ui.wiekBar.value())
+        self.death()
 
     def death(self):
         age_death = 0
@@ -42,12 +45,18 @@ class MyForm(QDialog):
             chol_death = 0
         if self.ui.tentoBox.value() < 50:
             hearth_death = 1/50*(50-self.ui.tentoBox.value())*100
-        elif self.ui.cholBox.value() > 100:
-            hearth_death = 1/50*(200-self.ui.tentoBox.value()-100)*100
+        elif self.ui.tentoBox.value() > 100:
+            hearth_death = 1/50*(self.ui.tentoBox.value()-100)*100
 
         death = (age_death + chol_death + hearth_death)/3
+        self.ui.progressBar.setValue(int(100-death))
 
-
+        if death <33:
+            self.ui.progress.setText("🤩")
+        elif death > 66:
+            self.ui.progress.setText("☠️")
+        else:
+            self.ui.progress.setText("😖")
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
